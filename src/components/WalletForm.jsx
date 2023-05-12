@@ -16,9 +16,7 @@ class WalletForm extends Component {
         <input data-testid="value-input" type="text" placeholder="valor" />
         <input data-testid="description-input" type="text" placeholder="descrição" />
         <select data-testid="currency-input" name="currency" id="currency">
-          {currencies.map((cur) => 
-            <option key={ cur } value="currencies">{cur}</option>
-          )}
+          {currencies.map((cur) => <option key={ cur } value="currencies">{cur}</option>)}
         </select>
         <select name="payment-method" id="payment-method" data-testid="method-input">
           <option value="payment-method">Dinheiro</option>
