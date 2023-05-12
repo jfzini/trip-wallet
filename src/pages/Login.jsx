@@ -32,7 +32,7 @@ class Login extends React.Component {
 
   handleClick = () => {
     const { history, dispatch } = this.props;
-    dispatch(actionSubmitLogin(this.state));
+    dispatch(actionSubmitLogin(this.state.email));
     history.push('/carteira');
   };
 
@@ -59,7 +59,7 @@ class Login extends React.Component {
           placeholder="senha"
           onChange={ (e) => this.handleChange(e.target) }
         />
-        <button disabled={ invalid } onClick={ () => this.handleClick() }>
+        <button type="button" disabled={ invalid } onClick={ () => this.handleClick() }>
           Entrar
         </button>
       </form>
