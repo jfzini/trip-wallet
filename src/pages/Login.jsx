@@ -1,5 +1,7 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import { connect } from 'react-redux';
+import { actionSubmitLogin } from '../redux/actions';
 
 class Login extends React.Component {
   state = {
@@ -10,21 +12,14 @@ class Login extends React.Component {
 
   validateFields = () => {
     const { email, password } = this.state;
-
     const emailRegex = /^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/g;
     const validEmail = emailRegex.test(email);
-
     const PWMinLen = 6;
     const validPW = password.length >= PWMinLen;
-
     if (validEmail && validPW) {
-      this.setState({
-        invalid: false,
-      });
+      this.setState({ invalid: false });
     } else {
-      this.setState({
-        invalid: true,
-      });
+      this.setState({ invalid: true });
     }
   };
 
@@ -36,7 +31,8 @@ class Login extends React.Component {
   };
 
   handleClick = () => {
-    const { history } = this.props;
+    const { history, dispatch } = this.props;
+    dispatch(actionSubmitLogin(this.state.email));
     history.push('/carteira');
   };
 
@@ -63,10 +59,7 @@ class Login extends React.Component {
           placeholder="senha"
           onChange={ (e) => this.handleChange(e.target) }
         />
-        <button
-          disabled={ invalid }
-          onClick={ () => this.handleClick() }
-        >
+        <button disabled={ invalid } onClick={ () => this.handleClick() }>
           Entrar
         </button>
       </form>
@@ -80,4 +73,4 @@ Login.propTypes = {
   }),
 }.isRequired;
 
-export default Login;
+export default connect()(Login);
