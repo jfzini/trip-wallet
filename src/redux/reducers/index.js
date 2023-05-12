@@ -1,6 +1,6 @@
 import { combineReducers } from 'redux';
-import { userReducer } from './user';
-// import user from './user';
+import userReducer from './user';
+
 // import wallet from './wallet';
 
 // Configure os seus reducers.

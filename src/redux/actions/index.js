@@ -1,6 +1,6 @@
 export const SUBMIT_LOGIN = 'SUBMIT_LOGIN';
 
-export const actionSubmitLogin = (email) => ({
+export const actionSubmitLogin = (state) => ({
   type: SUBMIT_LOGIN,
-  email,
+  payload: state,
 });
