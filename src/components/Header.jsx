@@ -4,9 +4,8 @@ import { connect } from 'react-redux';
 
 class Header extends Component {
   render() {
-    const { email, expenses } = this.props;
-    const totalExpenses = expenses.map((el) => Number(el.subtotal))
-      .reduce((a, b) => a + b, 0);
+    const { email, subtotals } = this.props;
+    const totalExpenses = subtotals.reduce((a, b) => Number(a) + Number(b), 0);
 
     return (
       <header>
@@ -20,14 +19,11 @@ class Header extends Component {
 
 Header.propTypes = {
   email: PropTypes.string,
-  expenses: PropTypes.shape({
-    map: PropTypes.func,
-  }),
 }.isRequired;
 
 const mapStateToProps = (globalState) => ({
   email: globalState.user.email,
-  expenses: globalState.wallet.expenses,
+  subtotals: globalState.wallet.subtotals,
 });
 
 export default connect(mapStateToProps)(Header);

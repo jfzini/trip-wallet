@@ -12,22 +12,26 @@ const loadCurrencies = (currencies) => ({
   payload: currencies,
 });
 
-export const actionSaveExpense = (localState, id, exchangeRate) => ({
+export const actionSaveExpense = (localState, id, exchangeRates) => ({
   type: SAVE_EXPENSES,
   payload: [
     {
       ...localState,
       id,
-      exchangeRate,
-      subtotal: (localState.value * exchangeRate).toFixed(2),
+      exchangeRates,
+      // subtotal: (localState.value * exchangeRates).toFixed(2),
     },
   ],
 });
 
-// export const actionCalcTotal = (expenses) => ({
-//   type: 'CALC_TOTAL',
-//   payload: expenses.map(el => Number(el.subtotal)).reduce((a, b) => a + b, 0),
-// })
+export const actionCalcSubtotal = (currencies, currency, value) => {
+  const allCurrenciesData = Object.values(currencies);
+  const currencyData = allCurrenciesData.find(({ code }) => code === currency);
+  return {
+    type: 'CALC_SUBTOTAL',
+    payload: [(currencyData.ask * Number(value)).toFixed(2)],
+  };
+};
 
 export const actionGetCurrencies = () => async (dispatch) => {
   const fetchCurrencies = await fetch('https://economia.awesomeapi.com.br/json/all');

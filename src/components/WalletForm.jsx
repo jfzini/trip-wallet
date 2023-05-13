@@ -1,14 +1,14 @@
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { actionGetCurrencies, actionSaveExpense } from '../redux/actions';
+import { actionCalcSubtotal, actionGetCurrencies, actionSaveExpense } from '../redux/actions';
 
 class WalletForm extends Component {
   state = {
     value: '',
     currency: 'USD',
-    method: 'cash',
-    tag: 'alimentacao',
+    method: 'Dinheiro',
+    tag: 'Alimentação',
     description: '',
   };
 
@@ -20,22 +20,23 @@ class WalletForm extends Component {
   getExchangeRate = async () => {
     const fetchCurrencies = await fetch('https://economia.awesomeapi.com.br/json/all');
     const JSONCurrencies = await fetchCurrencies.json();
-    const allCurrenciesData = Object.values(JSONCurrencies);
-    const { currency } = this.state;
-    const currencyData = allCurrenciesData.find(({ code }) => code === currency);
-    return currencyData.ask;
+    return JSONCurrencies;
+    // const allCurrenciesData = Object.values(JSONCurrencies);
+    // const { currency } = this.state;
+    // const currencyData = allCurrenciesData.find(({ code }) => code === currency);
+    // return currencyData.ask;
   };
 
   handleClick = async () => {
     const { dispatch, expenses } = this.props;
-    const exchangeRate = await this.getExchangeRate();
-    dispatch(actionSaveExpense(this.state, expenses.length, exchangeRate));
-    // dispatch(actionCalcTotal(expenses));
+    const exchangeRates = await this.getExchangeRate();
+    dispatch(actionSaveExpense(this.state, expenses.length, exchangeRates));
+    dispatch(actionCalcSubtotal(exchangeRates, this.state.currency, this.state.value));
     this.setState({
       value: '',
       currency: 'USD',
-      method: 'cash',
-      tag: 'alimentacao',
+      method: 'Dinheiro',
+      tag: 'Alimentação',
       description: '',
     });
   };
@@ -84,9 +85,9 @@ class WalletForm extends Component {
           value={ method }
           onChange={ (e) => this.handleChange(e.target) }
         >
-          <option value="cash">Dinheiro</option>
-          <option value="credit">Cartão de crédito</option>
-          <option value="debit">Cartão de débito</option>
+          <option value="Dinheiro">Dinheiro</option>
+          <option value="Cartão de crédito">Cartão de crédito</option>
+          <option value="Cartão de débito">Cartão de débito</option>
         </select>
         <select
           name="tag"
@@ -95,11 +96,11 @@ class WalletForm extends Component {
           value={ tag }
           onChange={ (e) => this.handleChange(e.target) }
         >
-          <option value="alimentacao">Alimentação</option>
-          <option value="lazer">Lazer</option>
-          <option value="trabalho">Trabalho</option>
-          <option value="transporte">Transporte</option>
-          <option value="saude">Saúde</option>
+          <option value="Alimentação">Alimentação</option>
+          <option value="Lazer">Lazer</option>
+          <option value="Trabalho">Trabalho</option>
+          <option value="Transporte">Transporte</option>
+          <option value="Saúde">Saúde</option>
         </select>
         <button type="button" onClick={ this.handleClick }>Adicionar despesa</button>
       </form>
