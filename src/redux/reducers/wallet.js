@@ -1,4 +1,10 @@
-import { GET_CURRENCIES, SAVE_EXPENSES, CALC_SUBTOTAL, DELETE_EXPENSE, DELETE_SUBTOTAL } from '../actions';
+import {
+  GET_CURRENCIES,
+  SAVE_EXPENSES,
+  CALC_SUBTOTAL,
+  DELETE_EXPENSE,
+  DELETE_SUBTOTAL,
+} from '../actions';
 
 const INITIAL_STATE = {
   currencies: [], // array de string
@@ -30,12 +36,12 @@ const walletReducer = (state = INITIAL_STATE, action) => {
     return {
       ...state,
       expenses: action.payload,
-    }
+    };
   case DELETE_SUBTOTAL:
     return {
       ...state,
       subtotals: action.payload,
-    }
+    };
   default:
     return state;
   }

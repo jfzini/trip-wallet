@@ -27,24 +27,25 @@ export const actionSaveExpense = (localState, id, exchangeRates) => ({
 });
 
 export const actionDeleteExpense = (id, expenses) => {
-  const filteredExpenses = expenses.filter((expense) => expense.id !== id)
+  const filteredExpenses = expenses.filter((expense) => expense.id !== id);
   return {
     type: DELETE_EXPENSE,
     payload: filteredExpenses,
-  }
-}
+  };
+};
 
 export const actionAddSubtotal = (currencies, currency, value, id) => {
   const allCurrenciesData = Object.values(currencies);
   const currencyData = allCurrenciesData.find(({ code }) => code === currency);
   return {
     type: CALC_SUBTOTAL,
-    payload: [{[id]: (currencyData.ask * Number(value)).toFixed(2)}],
+    payload: [{ [id]: (currencyData.ask * Number(value)).toFixed(2) }],
   };
 };
 
 export const actionDeleteSubtotal = (id, subtotals) => {
-  const filteredSubtotals = subtotals.filter(subtotal => Object.keys(subtotal)[0] != id);
+  const filteredSubtotals = subtotals
+    .filter((subtotal) => Number(Object.keys(subtotal)[0]) !== id);
   return {
     type: DELETE_SUBTOTAL,
     payload: filteredSubtotals,
