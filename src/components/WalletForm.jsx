@@ -1,7 +1,11 @@
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { actionCalcSubtotal, actionGetCurrencies, actionSaveExpense } from '../redux/actions';
+import {
+  actionCalcSubtotal,
+  actionGetCurrencies,
+  actionSaveExpense,
+} from '../redux/actions';
 
 class WalletForm extends Component {
   state = {
@@ -29,9 +33,10 @@ class WalletForm extends Component {
 
   handleClick = async () => {
     const { dispatch, expenses } = this.props;
+    const { currency, value } = this.state;
     const exchangeRates = await this.getExchangeRate();
     dispatch(actionSaveExpense(this.state, expenses.length, exchangeRates));
-    dispatch(actionCalcSubtotal(exchangeRates, this.state.currency, this.state.value));
+    dispatch(actionCalcSubtotal(exchangeRates, currency, value));
     this.setState({
       value: '',
       currency: 'USD',
