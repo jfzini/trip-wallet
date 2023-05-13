@@ -1,10 +1,38 @@
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { actionDeleteExpense, actionDeleteSubtotal } from '../redux/actions';
 
 class Table extends Component {
+
+  state = {
+    expenses: [],
+  }
+
+  componentDidMount() {
+    const { expenses } = this.props;
+    this.setState({
+      expenses,
+    })
+  }
+
+  handleClick = (id) => {
+    const { expenses, subtotals, dispatch } = this.props;
+    dispatch(actionDeleteExpense(id, expenses));
+    dispatch(actionDeleteSubtotal(id, subtotals));
+    this.setState({
+      expenses,
+    })
+    // this.render();
+    // const tableBody = document.getElementById('expenses-tbody');
+    // const tableRow = document.getElementById(`expense-${id}`);
+    // tableRow.remove();
+    // console.log(tableRow);
+  }
+
   render() {
     const { expenses } = this.props;
+
     return (
       <table>
         <thead>
@@ -20,10 +48,9 @@ class Table extends Component {
             <th>Editar/Excluir</th>
           </tr>
         </thead>
-        <tbody>
-          {expenses
-            .map(({ description, value, method, tag, currency, exchangeRates, id }) => (
-              <tr key={ id }>
+        <tbody id='expenses-tbody'>
+          {expenses.map(({ description, value, method, tag, currency, exchangeRates, id }) => (
+              <tr key={ id } id={`expense-${id}`}>
                 <td>{description}</td>
                 <td>{tag}</td>
                 <td>{method}</td>
@@ -32,7 +59,9 @@ class Table extends Component {
                 <td>{(exchangeRates[currency].ask * 1).toFixed(2)}</td>
                 <td>{(exchangeRates[currency].ask * value).toFixed(2)}</td>
                 <td>Real</td>
-                <td>Editar/Excluir</td>
+                <td>
+                  <button type='button' onClick={() => this.handleClick(id)} data-testid="delete-btn">Excluir</button>
+                </td>
               </tr>))}
         </tbody>
       </table>
@@ -48,6 +77,7 @@ Table.propTypes = {
 
 const mapStateToProps = (globalState) => ({
   expenses: globalState.wallet.expenses,
+  subtotals: globalState.wallet.subtotals,
 });
 
 export default connect(mapStateToProps)(Table);

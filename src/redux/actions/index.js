@@ -1,6 +1,9 @@
 export const SUBMIT_LOGIN = 'SUBMIT_LOGIN';
 export const GET_CURRENCIES = 'GET_CURRENCIES';
 export const SAVE_EXPENSES = 'SAVE_EXPENSES';
+export const CALC_SUBTOTAL = 'CALC_SUBTOTAL';
+export const DELETE_EXPENSE = 'DELETE_EXPENSE';
+export const DELETE_SUBTOTAL = 'DELETE_SUBTOTAL';
 
 export const actionSubmitLogin = (state) => ({
   type: SUBMIT_LOGIN,
@@ -19,17 +22,32 @@ export const actionSaveExpense = (localState, id, exchangeRates) => ({
       ...localState,
       id,
       exchangeRates,
-      // subtotal: (localState.value * exchangeRates).toFixed(2),
     },
   ],
 });
 
-export const actionCalcSubtotal = (currencies, currency, value) => {
+export const actionDeleteExpense = (id, expenses) => {
+  const filteredExpenses = expenses.filter((expense) => expense.id !== id)
+  return {
+    type: DELETE_EXPENSE,
+    payload: filteredExpenses,
+  }
+}
+
+export const actionAddSubtotal = (currencies, currency, value, id) => {
   const allCurrenciesData = Object.values(currencies);
   const currencyData = allCurrenciesData.find(({ code }) => code === currency);
   return {
-    type: 'CALC_SUBTOTAL',
-    payload: [(currencyData.ask * Number(value)).toFixed(2)],
+    type: CALC_SUBTOTAL,
+    payload: [{[id]: (currencyData.ask * Number(value)).toFixed(2)}],
+  };
+};
+
+export const actionDeleteSubtotal = (id, subtotals) => {
+  const filteredSubtotals = subtotals.filter(subtotal => Object.keys(subtotal)[0] != id);
+  return {
+    type: DELETE_SUBTOTAL,
+    payload: filteredSubtotals,
   };
 };
 

@@ -2,7 +2,7 @@ import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import {
-  actionCalcSubtotal,
+  actionAddSubtotal,
   actionGetCurrencies,
   actionSaveExpense,
 } from '../redux/actions';
@@ -36,7 +36,7 @@ class WalletForm extends Component {
     const { currency, value } = this.state;
     const exchangeRates = await this.getExchangeRate();
     dispatch(actionSaveExpense(this.state, expenses.length, exchangeRates));
-    dispatch(actionCalcSubtotal(exchangeRates, currency, value));
+    dispatch(actionAddSubtotal(exchangeRates, currency, value, expenses.length));
     this.setState({
       value: '',
       currency: 'USD',
