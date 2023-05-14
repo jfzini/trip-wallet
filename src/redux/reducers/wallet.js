@@ -29,7 +29,7 @@ const walletReducer = (state = INITIAL_STATE, action) => {
       ...state,
       expenses: [...state.expenses, ...action.payload],
     };
-  case CALC_SUBTOTAL:
+  case CALC_SUBTOTAL || DELETE_SUBTOTAL:
     // if (state.editor) {
     //   return {
     //     ...state,
@@ -45,11 +45,11 @@ const walletReducer = (state = INITIAL_STATE, action) => {
       ...state,
       expenses: action.payload,
     };
-  case DELETE_SUBTOTAL:
-    return {
-      ...state,
-      subtotals: action.payload,
-    };
+  // case DELETE_SUBTOTAL:
+  //   return {
+  //     ...state,
+  //     subtotals: action.payload,
+  //   };
   case EDIT_INDEX:
     return {
       ...state,

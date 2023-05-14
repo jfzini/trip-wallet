@@ -36,23 +36,10 @@ export const actionDeleteExpense = (id, expenses) => {
   };
 };
 
-export const actionAddSubtotal = (currencyData, value, id, subtotals = []) =>
-  // if (subtotals.length > 0) {
-  //   const indexes = subtotals.map(el => Object.keys(el)[0]);
-  //   const editingIndex = indexes.indexOf(id);
-  //   console.log(indexes);
-  //   if (editingIndex !== -1) {
-  //     subtotals[editingIndex] = { [id]: (currencyData.ask * Number(value)).toFixed(2) }
-  //     return {
-  //       type: CALC_SUBTOTAL,
-  //       payload: subtotals,
-  //     }
-  //   }
-  // }
-  ({
-    type: CALC_SUBTOTAL,
-    payload: { ...subtotals, [id]: (currencyData.ask * Number(value)).toFixed(2) },
-  });
+export const actionAddSubtotal = (currencyData, value, id, subtotals = []) => ({
+  type: CALC_SUBTOTAL,
+  payload: { ...subtotals, [id]: (currencyData.ask * Number(value)).toFixed(2) },
+});
 export const actionDeleteSubtotal = (id, subtotals) => {
   delete subtotals[id];
   // const filteredSubtotals = subtotals
