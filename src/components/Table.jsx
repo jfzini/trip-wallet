@@ -1,32 +1,24 @@
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { actionDeleteExpense, actionDeleteSubtotal } from '../redux/actions';
+import {
+  actionDeleteExpense,
+  actionDeleteSubtotal,
+  actionGetIndexToEdit,
+} from '../redux/actions';
 
 class Table extends Component {
-  // state = {
-  //   expenses: [],
-  // };
-
-  // componentDidMount() {
-  //   const { expenses } = this.props;
-  //   this.setState({
-  //     expenses,
-  //   });
-  // }
-
-  handleClick = (id) => {
+  handleDelete = (id) => {
     const { expenses, subtotals, dispatch } = this.props;
     dispatch(actionDeleteExpense(id, expenses));
     dispatch(actionDeleteSubtotal(id, subtotals));
-    // this.setState({
-    //   expenses,
-    // });
-    // this.render();
-    // const tableBody = document.getElementById('expenses-tbody');
-    // const tableRow = document.getElementById(`expense-${id}`);
-    // tableRow.remove();
-    // console.log(tableRow);
+  };
+
+  handleEdit = (id) => {
+    const { expenses, dispatch } = this.props;
+    const foundExpense = expenses.find((expense) => expense.id === id);
+    const index = expenses.indexOf(foundExpense);
+    dispatch(actionGetIndexToEdit(index));
   };
 
   render() {
@@ -69,10 +61,17 @@ class Table extends Component {
               <td>
                 <button
                   type="button"
-                  onClick={ () => this.handleClick(id) }
+                  onClick={ () => this.handleDelete(id) }
                   data-testid="delete-btn"
                 >
                   Excluir
+                </button>
+                <button
+                  type="button"
+                  onClick={ () => this.handleEdit(id) }
+                  data-testid="edit-btn"
+                >
+                  Editar despesa
                 </button>
               </td>
             </tr>))}
@@ -91,6 +90,7 @@ Table.propTypes = {
 const mapStateToProps = (globalState) => ({
   expenses: globalState.wallet.expenses,
   subtotals: globalState.wallet.subtotals,
+  editor: globalState.wallet.editor,
 });
 
 export default connect(mapStateToProps)(Table);

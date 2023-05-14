@@ -4,6 +4,8 @@ export const SAVE_EXPENSES = 'SAVE_EXPENSES';
 export const CALC_SUBTOTAL = 'CALC_SUBTOTAL';
 export const DELETE_EXPENSE = 'DELETE_EXPENSE';
 export const DELETE_SUBTOTAL = 'DELETE_SUBTOTAL';
+export const EDIT_INDEX = 'EDIT_INDEX';
+export const EDIT_EXPENSE = 'EDIT_EXPENSE';
 
 export const actionSubmitLogin = (state) => ({
   type: SUBMIT_LOGIN,
@@ -34,12 +36,24 @@ export const actionDeleteExpense = (id, expenses) => {
   };
 };
 
-export const actionAddSubtotal = (currencies, currency, value, id) => {
+export const actionAddSubtotal = (currencies, currency, value, id, subtotals = []) => {
   const allCurrenciesData = Object.values(currencies);
   const currencyData = allCurrenciesData.find(({ code }) => code === currency);
+  // if (subtotals.length > 0) {
+  //   const indexes = subtotals.map(el => Object.keys(el)[0]);
+  //   const editingIndex = indexes.indexOf(id);
+  //   console.log(indexes);
+  //   if (editingIndex !== -1) {
+  //     subtotals[editingIndex] = { [id]: (currencyData.ask * Number(value)).toFixed(2) }
+  //     return {
+  //       type: CALC_SUBTOTAL,
+  //       payload: subtotals,
+  //     }
+  //   }
+  // }
   return {
     type: CALC_SUBTOTAL,
-    payload: [{ [id]: (currencyData.ask * Number(value)).toFixed(2) }],
+    payload: { ...subtotals, [id]: (currencyData.ask * Number(value)).toFixed(2) },
   };
 };
 
@@ -58,3 +72,13 @@ export const actionGetCurrencies = () => async (dispatch) => {
   const currenciesArray = Object.keys(JSONCurrencies).filter((key) => key !== 'USDT');
   dispatch(loadCurrencies(currenciesArray));
 };
+
+export const actionGetIndexToEdit = (index) => ({
+  type: EDIT_INDEX,
+  payload: index,
+});
+
+export const actionEditExpense = (expenses) => ({
+  type: EDIT_EXPENSE,
+  payload: expenses,
+});

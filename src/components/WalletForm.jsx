@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import {
   actionAddSubtotal,
+  actionEditExpense,
   actionGetCurrencies,
   actionSaveExpense,
 } from '../redux/actions';
@@ -21,22 +22,7 @@ class WalletForm extends Component {
     dispatch(actionGetCurrencies());
   }
 
-  getExchangeRate = async () => {
-    const fetchCurrencies = await fetch('https://economia.awesomeapi.com.br/json/all');
-    const JSONCurrencies = await fetchCurrencies.json();
-    return JSONCurrencies;
-    // const allCurrenciesData = Object.values(JSONCurrencies);
-    // const { currency } = this.state;
-    // const currencyData = allCurrenciesData.find(({ code }) => code === currency);
-    // return currencyData.ask;
-  };
-
-  handleClick = async () => {
-    const { dispatch, expenses } = this.props;
-    const { currency, value } = this.state;
-    const exchangeRates = await this.getExchangeRate();
-    dispatch(actionSaveExpense(this.state, expenses.length, exchangeRates));
-    dispatch(actionAddSubtotal(exchangeRates, currency, value, expenses.length));
+  resetState = () => {
     this.setState({
       value: '',
       currency: 'USD',
@@ -46,6 +32,53 @@ class WalletForm extends Component {
     });
   };
 
+  getExchangeRate = async () => {
+    const fetchCurrencies = await fetch('https://economia.awesomeapi.com.br/json/all');
+    const JSONCurrencies = await fetchCurrencies.json();
+    return JSONCurrencies;
+  };
+
+  handleAdd = async () => {
+    const { dispatch, expenses, subtotals } = this.props;
+    const { currency, value } = this.state;
+    const exchangeRates = await this.getExchangeRate();
+    dispatch(actionSaveExpense(this.state, expenses.length, exchangeRates));
+    dispatch(actionAddSubtotal(
+      exchangeRates,
+      currency,
+      value,
+      expenses.length,
+      subtotals,
+    ));
+    this.resetState();
+  };
+
+  handleEdit = async () => {
+    const { expenses, index, dispatch, subtotals } = this.props;
+    const { value, currency, method, tag, description } = this.state;
+    // const editingExpense = expenses[index];
+    expenses[index] = { ...expenses[index], value, currency, method, tag, description };
+    const exchangeRates = await this.getExchangeRate();
+    dispatch(actionAddSubtotal(
+      exchangeRates,
+      currency,
+      value,
+      expenses[index].id,
+      subtotals,
+    ));
+    dispatch(actionEditExpense(expenses));
+    this.resetState();
+  };
+
+  handleClick = () => {
+    const { editor } = this.props;
+    if (editor) {
+      this.handleEdit();
+    } else {
+      this.handleAdd();
+    }
+  };
+
   handleChange = async ({ name, value }) => {
     await this.setState({
       [name]: value,
@@ -53,7 +86,7 @@ class WalletForm extends Component {
   };
 
   render() {
-    const { currencies } = this.props;
+    const { currencies, editor } = this.props;
     const { value, currency, method, description, tag } = this.state;
     return (
       <form action="">
@@ -107,7 +140,12 @@ class WalletForm extends Component {
           <option value="Transporte">Transporte</option>
           <option value="Saúde">Saúde</option>
         </select>
-        <button type="button" onClick={ this.handleClick }>Adicionar despesa</button>
+        <button
+          type="button"
+          onClick={ this.handleClick }
+        >
+          {editor ? 'Editar despesa' : 'Adicionar despesa'}
+        </button>
       </form>
     );
   }
@@ -123,6 +161,9 @@ WalletForm.propTypes = {
 const mapStateToProps = (globalState) => ({
   currencies: globalState.wallet.currencies,
   expenses: globalState.wallet.expenses,
+  editor: globalState.wallet.editor,
+  index: globalState.wallet.idToEdit,
+  subtotals: globalState.wallet.subtotals,
 });
 
 export default connect(mapStateToProps)(WalletForm);

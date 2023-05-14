@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 class Header extends Component {
   render() {
     const { email, subtotals } = this.props;
-    const numSubtotals = subtotals.map((subtotal) => Object.values(subtotal)[0]);
+    const numSubtotals = Object.values(subtotals);
     const totalExpenses = numSubtotals.reduce((a, b) => Number(a) + Number(b), 0);
 
     return (
