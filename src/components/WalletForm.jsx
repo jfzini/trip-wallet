@@ -38,18 +38,19 @@ class WalletForm extends Component {
     return JSONCurrencies;
   };
 
+  getCurrencyData = (currencies, currency) => {
+    const allCurrenciesData = Object.values(currencies);
+    const currencyData = allCurrenciesData.find(({ code }) => code === currency);
+    return currencyData;
+  };
+
   handleAdd = async () => {
     const { dispatch, expenses, subtotals } = this.props;
     const { currency, value } = this.state;
-    const exchangeRates = await this.getExchangeRate();
-    dispatch(actionSaveExpense(this.state, expenses.length, exchangeRates));
-    dispatch(actionAddSubtotal(
-      exchangeRates,
-      currency,
-      value,
-      expenses.length,
-      subtotals,
-    ));
+    const currencies = await this.getExchangeRate();
+    const currencyData = this.getCurrencyData(currencies, currency);
+    dispatch(actionSaveExpense(this.state, expenses.length, currencies));
+    dispatch(actionAddSubtotal(currencyData, value, expenses.length, subtotals));
     this.resetState();
   };
 
@@ -58,14 +59,9 @@ class WalletForm extends Component {
     const { value, currency, method, tag, description } = this.state;
     // const editingExpense = expenses[index];
     expenses[index] = { ...expenses[index], value, currency, method, tag, description };
-    const exchangeRates = await this.getExchangeRate();
-    dispatch(actionAddSubtotal(
-      exchangeRates,
-      currency,
-      value,
-      expenses[index].id,
-      subtotals,
-    ));
+    const currencies = await this.getExchangeRate();
+    const currencyData = this.getCurrencyData(currencies, currency);
+    dispatch(actionAddSubtotal(currencyData, value, expenses[index].id, subtotals));
     dispatch(actionEditExpense(expenses));
     this.resetState();
   };

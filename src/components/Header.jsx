@@ -3,8 +3,22 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
 class Header extends Component {
+  state = {
+    subtotals: {},
+  };
+
+  componentDidMount() {
+    setInterval(() => {
+      const { subtotals } = this.props;
+      this.setState({
+        subtotals,
+      });
+    }, 100);
+  }
+
   render() {
-    const { email, subtotals } = this.props;
+    const { email } = this.props;
+    const { subtotals } = this.state;
     const numSubtotals = Object.values(subtotals);
     const totalExpenses = numSubtotals.reduce((a, b) => Number(a) + Number(b), 0);
 

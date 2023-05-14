@@ -36,9 +36,7 @@ export const actionDeleteExpense = (id, expenses) => {
   };
 };
 
-export const actionAddSubtotal = (currencies, currency, value, id, subtotals = []) => {
-  const allCurrenciesData = Object.values(currencies);
-  const currencyData = allCurrenciesData.find(({ code }) => code === currency);
+export const actionAddSubtotal = (currencyData, value, id, subtotals = []) =>
   // if (subtotals.length > 0) {
   //   const indexes = subtotals.map(el => Object.keys(el)[0]);
   //   const editingIndex = indexes.indexOf(id);
@@ -51,18 +49,17 @@ export const actionAddSubtotal = (currencies, currency, value, id, subtotals = [
   //     }
   //   }
   // }
-  return {
+  ({
     type: CALC_SUBTOTAL,
     payload: { ...subtotals, [id]: (currencyData.ask * Number(value)).toFixed(2) },
-  };
-};
-
+  });
 export const actionDeleteSubtotal = (id, subtotals) => {
-  const filteredSubtotals = subtotals
-    .filter((subtotal) => Number(Object.keys(subtotal)[0]) !== id);
+  delete subtotals[id];
+  // const filteredSubtotals = subtotals
+  //   .filter((subtotal) => Number(Object.keys(subtotal)[0]) !== id);
   return {
     type: DELETE_SUBTOTAL,
-    payload: filteredSubtotals,
+    payload: subtotals,
   };
 };
 
