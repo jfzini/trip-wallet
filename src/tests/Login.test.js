@@ -50,7 +50,7 @@ describe('Tests if the Login page is working as intended', () => {
   });
 
   it('should enable button after inputting valid values and go to correct page', async () => {
-    const {history} = renderWithRouterAndRedux(<App />);
+    const { history } = renderWithRouterAndRedux(<App />);
 
     const email = screen.getByTestId(emailTestID);
     const password = screen.getByTestId(passwordTestID);
