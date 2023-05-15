@@ -79,7 +79,7 @@ const mockData = {
             bid: '6.1525',
             ask: '6.1563',
             timestamp: '1684172591',
-            create_date: '2023-05-15 14:43:11',
+            create_date: '2023-05-15 14:43:12',
           },
           ARS: {
             code: 'ARS',
