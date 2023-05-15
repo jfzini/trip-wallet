@@ -1,7 +1,6 @@
 import { screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { renderWithRouterAndRedux } from './helpers/renderWith';
-import Login from '../pages/Login';
 import App from '../App';
 
 describe('Tests if the Login page is working as intended', () => {
@@ -13,7 +12,7 @@ describe('Tests if the Login page is working as intended', () => {
   const validPassword = '123456';
 
   it('should have inputs for email, password, and a disabled button', () => {
-    renderWithRouterAndRedux(<Login />);
+    renderWithRouterAndRedux(<App />);
 
     const email = screen.getByTestId(emailTestID);
     const password = screen.getByTestId(passwordTestID);
@@ -26,7 +25,7 @@ describe('Tests if the Login page is working as intended', () => {
   });
 
   it('should not enable button after inputting invalid values', async () => {
-    renderWithRouterAndRedux(<Login />);
+    renderWithRouterAndRedux(<App />);
 
     const email = screen.getByTestId(emailTestID);
     const password = screen.getByTestId(passwordTestID);

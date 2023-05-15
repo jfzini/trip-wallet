@@ -40,6 +40,7 @@ export const actionAddSubtotal = (currencyData, value, id, subtotals = []) => ({
   type: CALC_SUBTOTAL,
   payload: { ...subtotals, [id]: (currencyData.ask * Number(value)).toFixed(2) },
 });
+
 export const actionDeleteSubtotal = (id, subtotals) => {
   delete subtotals[id];
   return {
@@ -49,10 +50,14 @@ export const actionDeleteSubtotal = (id, subtotals) => {
 };
 
 export const actionGetCurrencies = () => async (dispatch) => {
-  const fetchCurrencies = await fetch('https://economia.awesomeapi.com.br/json/all');
-  const JSONCurrencies = await fetchCurrencies.json();
-  const currenciesArray = Object.keys(JSONCurrencies).filter((key) => key !== 'USDT');
-  dispatch(loadCurrencies(currenciesArray));
+  try {
+    const fetchCurrencies = await fetch('https://economia.awesomeapi.com.br/json/all');
+    const JSONCurrencies = await fetchCurrencies.json();
+    const currenciesArray = Object.keys(JSONCurrencies).filter((key) => key !== 'USDT');
+    dispatch(loadCurrencies(currenciesArray));
+  } catch (error) {
+    console.log(error);
+  }
 };
 
 export const actionGetIndexToEdit = (index) => ({
