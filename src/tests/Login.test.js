@@ -4,14 +4,18 @@ import { renderWithRouterAndRedux } from './helpers/renderWith';
 import Login from '../pages/Login';
 
 describe('Tests if the Login page is working as intended', () => {
-
-  const emailTestId
+  const emailTestID = 'email-input';
+  const passwordTestID = 'password-input';
+  const invalidEmail = 'teste@teste.c';
+  const invalidPassword = '12345';
+  const validEmail = 'teste@teste.com';
+  const validPassword = '123456';
 
   it('should have inputs for email, password, and a disabled button', () => {
     renderWithRouterAndRedux(<Login />);
 
-    const email = screen.getByTestId('email-input');
-    const password = screen.getByTestId('password-input');
+    const email = screen.getByTestId(emailTestID);
+    const password = screen.getByTestId(passwordTestID);
     const btn = screen.getByRole('button', { name: /entrar/i });
 
     expect(email).toBeInTheDocument();
@@ -23,39 +27,39 @@ describe('Tests if the Login page is working as intended', () => {
   it('should not enable button after inputting invalid values', async () => {
     renderWithRouterAndRedux(<Login />);
 
-    const email = screen.getByTestId('email-input');
-    const password = screen.getByTestId('password-input');
+    const email = screen.getByTestId(emailTestID);
+    const password = screen.getByTestId(passwordTestID);
     const btn = screen.getByRole('button', { name: /entrar/i });
 
-    userEvent.type(email, 'teste@teste.c');
-    userEvent.type(password, '123456');
+    userEvent.type(email, invalidEmail);
+    userEvent.type(password, validPassword);
 
-    expect(email.value).toEqual('teste@teste.c');
-    expect(password.value).toEqual('123456');
+    expect(email.value).toEqual(invalidEmail);
+    expect(password.value).toEqual(validPassword);
     await waitFor(() => { expect(btn).toBeDisabled(); });
 
     userEvent.clear(email);
-    userEvent.type(email, 'teste@teste.com');
+    userEvent.type(email, validEmail);
     userEvent.clear(password);
-    userEvent.type(password, '12345');
+    userEvent.type(password, invalidPassword);
 
-    expect(email.value).toEqual('teste@teste.com');
-    expect(password.value).toEqual('12345');
+    expect(email.value).toEqual(validEmail);
+    expect(password.value).toEqual(invalidPassword);
     await waitFor(() => { expect(btn).toBeDisabled(); });
   });
 
   it('should enable button after inputting valid values', async () => {
     renderWithRouterAndRedux(<Login />);
 
-    const email = screen.getByTestId('email-input');
-    const password = screen.getByTestId('password-input');
+    const email = screen.getByTestId(emailTestID);
+    const password = screen.getByTestId(passwordTestID);
     const btn = screen.getByRole('button', { name: /entrar/i });
 
-    userEvent.type(email, 'teste@teste.com');
-    userEvent.type(password, '123456');
+    userEvent.type(email, validEmail);
+    userEvent.type(password, validPassword);
 
-    expect(email.value).toEqual('teste@teste.com');
-    expect(password.value).toEqual('123456');
+    expect(email.value).toEqual(validEmail);
+    expect(password.value).toEqual(validPassword);
     await waitFor(() => { expect(btn).toBeEnabled(); });
   });
 });
