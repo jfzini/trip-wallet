@@ -2,6 +2,7 @@ import { screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { renderWithRouterAndRedux } from './helpers/renderWith';
 import Login from '../pages/Login';
+import App from '../App';
 
 describe('Tests if the Login page is working as intended', () => {
   const emailTestID = 'email-input';
@@ -48,8 +49,8 @@ describe('Tests if the Login page is working as intended', () => {
     await waitFor(() => { expect(btn).toBeDisabled(); });
   });
 
-  it('should enable button after inputting valid values', async () => {
-    renderWithRouterAndRedux(<Login />);
+  it('should enable button after inputting valid values and go to correct page', async () => {
+    const {history} = renderWithRouterAndRedux(<App />);
 
     const email = screen.getByTestId(emailTestID);
     const password = screen.getByTestId(passwordTestID);
@@ -61,5 +62,9 @@ describe('Tests if the Login page is working as intended', () => {
     expect(email.value).toEqual(validEmail);
     expect(password.value).toEqual(validPassword);
     await waitFor(() => { expect(btn).toBeEnabled(); });
+
+    userEvent.click(btn);
+    const { pathname } = history.location;
+    expect(pathname).toBe('/carteira');
   });
 });
