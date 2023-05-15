@@ -42,8 +42,6 @@ export const actionAddSubtotal = (currencyData, value, id, subtotals = []) => ({
 });
 export const actionDeleteSubtotal = (id, subtotals) => {
   delete subtotals[id];
-  // const filteredSubtotals = subtotals
-  //   .filter((subtotal) => Number(Object.keys(subtotal)[0]) !== id);
   return {
     type: DELETE_SUBTOTAL,
     payload: subtotals,

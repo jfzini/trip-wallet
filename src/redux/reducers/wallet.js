@@ -11,8 +11,7 @@ import {
 const INITIAL_STATE = {
   currencies: [], // array de string
   expenses: [], // array de objetos, com cada objeto tendo as chaves id, value, currency, method, tag, description e exchangeRates
-  subtotals: {},
-  // total: 0,
+  subtotals: {}, // objeto com todos os subtotais de gastos
   editor: false, // valor booleano que indica de uma despesa está sendo editada
   idToEdit: 0, // valor numérico que armazena o id da despesa que esta sendo editada
 };
@@ -30,12 +29,6 @@ const walletReducer = (state = INITIAL_STATE, action) => {
       expenses: [...state.expenses, ...action.payload],
     };
   case CALC_SUBTOTAL || DELETE_SUBTOTAL:
-    // if (state.editor) {
-    //   return {
-    //     ...state,
-    //     subtotals: action.payload,
-    //   };
-    // }
     return {
       ...state,
       subtotals: action.payload,
@@ -45,11 +38,6 @@ const walletReducer = (state = INITIAL_STATE, action) => {
       ...state,
       expenses: action.payload,
     };
-  // case DELETE_SUBTOTAL:
-  //   return {
-  //     ...state,
-  //     subtotals: action.payload,
-  //   };
   case EDIT_INDEX:
     return {
       ...state,
