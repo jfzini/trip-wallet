@@ -7,6 +7,7 @@ import {
   actionGetCurrencies,
   actionSaveExpense,
 } from '../redux/actions';
+import { getExchangeRate, getCurrencyData } from './helpers/getData';
 
 class WalletForm extends Component {
   state = {
@@ -32,23 +33,11 @@ class WalletForm extends Component {
     });
   };
 
-  getExchangeRate = async () => {
-    const fetchCurrencies = await fetch('https://economia.awesomeapi.com.br/json/all');
-    const JSONCurrencies = await fetchCurrencies.json();
-    return JSONCurrencies;
-  };
-
-  getCurrencyData = (currencies, currency) => {
-    const allCurrenciesData = Object.values(currencies);
-    const currencyData = allCurrenciesData.find(({ code }) => code === currency);
-    return currencyData;
-  };
-
   handleAdd = async () => {
     const { dispatch, expenses, subtotals } = this.props;
     const { currency, value } = this.state;
-    const currencies = await this.getExchangeRate();
-    const currencyData = this.getCurrencyData(currencies, currency);
+    const currencies = await getExchangeRate();
+    const currencyData = getCurrencyData(currencies, currency);
     dispatch(actionSaveExpense(this.state, expenses.length, currencies));
     dispatch(actionAddSubtotal(currencyData, value, expenses.length, subtotals));
     this.resetState();
@@ -57,10 +46,9 @@ class WalletForm extends Component {
   handleEdit = async () => {
     const { expenses, index, dispatch, subtotals } = this.props;
     const { value, currency, method, tag, description } = this.state;
-    // const editingExpense = expenses[index];
     expenses[index] = { ...expenses[index], value, currency, method, tag, description };
-    const currencies = await this.getExchangeRate();
-    const currencyData = this.getCurrencyData(currencies, currency);
+    const currencies = await getExchangeRate();
+    const currencyData = getCurrencyData(currencies, currency);
     dispatch(actionAddSubtotal(currencyData, value, expenses[index].id, subtotals));
     dispatch(actionEditExpense(expenses));
     this.resetState();
@@ -76,9 +64,7 @@ class WalletForm extends Component {
   };
 
   handleChange = async ({ name, value }) => {
-    await this.setState({
-      [name]: value,
-    });
+    await this.setState({ [name]: value });
   };
 
   render() {

@@ -10,9 +10,7 @@ class Header extends Component {
   componentDidMount() {
     setInterval(() => {
       const { subtotals } = this.props;
-      this.setState({
-        subtotals,
-      });
+      this.setState({ subtotals });
     }, 100);
   }
 

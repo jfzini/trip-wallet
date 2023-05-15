@@ -24,9 +24,7 @@ class Login extends React.Component {
   };
 
   handleChange = async ({ name, value }) => {
-    await this.setState({
-      [name]: value,
-    });
+    await this.setState({ [name]: value });
     this.validateFields();
   };
 
