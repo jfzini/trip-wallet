@@ -4,12 +4,10 @@ import { renderWithRouterAndRedux } from './helpers/renderWith';
 import { mockFetch } from './mocks/mockFetch';
 import App from '../App';
 import mockData from './mocks/mockData';
-// import { getExchangeRate } from '../components/helpers/getData';
 
 describe('Tests if the Wallet page is working as intended', () => {
   beforeEach(() => jest.spyOn(global, 'fetch').mockImplementation(mockFetch));
-
-  afterEach(jest.clearAllMocks)
+  afterEach(jest.clearAllMocks);
 
   const emailFieldID = 'email-field';
   const totalFieldID = 'total-field';
@@ -60,17 +58,9 @@ describe('Tests if the Wallet page is working as intended', () => {
     expect(table).toBeVisible();
   });
 
-  // PRECISA IMPLEMENTAR MOCK NESTA FUNÇÃO DEPOIS
-  it('should render a table row with the correct values after adding an expense', async () => {
+  it('should render a predetermined expense passed as initial global state', async () => {
     renderWithRouterAndRedux(<App />, { initialEntries: ['/carteira'], initialState: mockData });
 
-    const valueInput = screen.getByTestId(valueInputID);
-    const descriptionInput = screen.getByTestId(descriptionInputID);
-    const currencyInput = screen.getByTestId(currencyInputID);
-    const methodInput = screen.getByTestId(methodInputID);
-    const tagInput = screen.getByTestId(tagInputID);
-
-    //should render a predetermined expense passed as initial global state
     expect(screen.getByRole('cell', { name: /despesa de teste/i })).toBeVisible();
     expect(screen.getByRole('cell', { name: /lazer/i })).toBeVisible();
     expect(screen.getByRole('cell', { name: /cartão de crédito/i })).toBeVisible();
@@ -81,8 +71,17 @@ describe('Tests if the Wallet page is working as intended', () => {
     expect(screen.getByRole('cell', { name: /36\.50/i })).toBeVisible();
     expect(screen.getByRole('button', { name: /excluir/i })).toBeVisible();
     expect(screen.getByRole('button', { name: /\beditar\b/i })).toBeVisible();
+  });
 
-    //should render an aditional expense
+  it('should render an aditional expense and save in the global state', async () => {
+    const { store } = renderWithRouterAndRedux(<App />, { initialEntries: ['/carteira'], initialState: mockData });
+
+    const valueInput = screen.getByTestId(valueInputID);
+    const descriptionInput = screen.getByTestId(descriptionInputID);
+    const currencyInput = screen.getByTestId(currencyInputID);
+    const methodInput = screen.getByTestId(methodInputID);
+    const tagInput = screen.getByTestId(tagInputID);
+
     userEvent.type(valueInput, '20');
     userEvent.type(descriptionInput, 'Teste de adição de descrição');
     userEvent.selectOptions(currencyInput, 'USD');
@@ -102,7 +101,9 @@ describe('Tests if the Wallet page is working as intended', () => {
       expect(screen.getByRole('cell', { name: /4\.91/i })).toBeVisible();
       expect(screen.getByRole('cell', { name: /98\.26/i })).toBeVisible();
       expect(screen.getByTestId('total-field')).toHaveTextContent(/134\.76/);
-    })
+    });
+
+    expect(store.getState().wallet.subtotals).toEqual({ 0: '36.50', 1: '98.26' });
   });
 
   it('should edit an expense correctly', async () => {
@@ -142,7 +143,7 @@ describe('Tests if the Wallet page is working as intended', () => {
   });
 
   it('should delete an expense correctly', async () => {
-    renderWithRouterAndRedux(<App />, { initialEntries: ['/carteira'], initialState: mockData });
+    const { store } = renderWithRouterAndRedux(<App />, { initialEntries: ['/carteira'], initialState: mockData });
 
     expect(screen.getByRole('cell', { name: /Teste de alteração de descrição/i }))
       .toBeVisible();
@@ -174,7 +175,6 @@ describe('Tests if the Wallet page is working as intended', () => {
         .not.toBeInTheDocument();
     });
 
-    expect(global.fetch).toHaveBeenCalled();
+    expect(store.getState().wallet.subtotals).toEqual({});
   });
-
 });
