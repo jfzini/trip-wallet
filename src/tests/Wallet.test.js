@@ -107,7 +107,7 @@ describe('Tests if the Wallet page is working as intended', () => {
   });
 
   it('should edit an expense correctly', async () => {
-    renderWithRouterAndRedux(<App />, { initialEntries: ['/carteira'], initialState: mockData });
+    const { store } = renderWithRouterAndRedux(<App />, { initialEntries: ['/carteira'], initialState: mockData });
 
     const valueInput = screen.getByTestId(valueInputID);
     const descriptionInput = screen.getByTestId(descriptionInputID);
@@ -140,6 +140,8 @@ describe('Tests if the Wallet page is working as intended', () => {
       expect(screen.queryByRole('button', { name: /editar despesa/i }))
         .not.toBeInTheDocument();
     });
+
+    expect(store.getState().wallet.subtotals).toEqual({ 0: '73.70' });
   });
 
   it('should delete an expense correctly', async () => {

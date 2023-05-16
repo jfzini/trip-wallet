@@ -44,7 +44,7 @@ export const actionAddSubtotal = (currencyData, value, id, subtotals = []) => ({
 export const actionDeleteSubtotal = (id, subtotals) => {
   delete subtotals[id];
   return {
-    type: DELETE_SUBTOTAL,
+    type: CALC_SUBTOTAL,
     payload: subtotals,
   };
 };
@@ -56,7 +56,7 @@ export const actionGetCurrencies = () => async (dispatch) => {
     const currenciesArray = Object.keys(JSONCurrencies).filter((key) => key !== 'USDT');
     dispatch(loadCurrencies(currenciesArray));
   } catch (error) {
-    console.log(error);
+    throw new Error(error);
   }
 };
 

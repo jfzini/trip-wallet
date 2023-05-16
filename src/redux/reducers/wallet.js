@@ -3,7 +3,6 @@ import {
   SAVE_EXPENSES,
   CALC_SUBTOTAL,
   DELETE_EXPENSE,
-  DELETE_SUBTOTAL,
   EDIT_INDEX,
   EDIT_EXPENSE,
 } from '../actions';
@@ -28,7 +27,7 @@ const walletReducer = (state = INITIAL_STATE, action) => {
       ...state,
       expenses: [...state.expenses, ...action.payload],
     };
-  case CALC_SUBTOTAL || DELETE_SUBTOTAL:
+  case CALC_SUBTOTAL:
     return {
       ...state,
       subtotals: action.payload,
