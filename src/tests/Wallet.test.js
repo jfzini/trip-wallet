@@ -1,22 +1,15 @@
 import { screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { renderWithRouterAndRedux } from './helpers/renderWith';
-// import Wallet from '../pages/Wallet';
+import { mockFetch } from './mocks/mockFetch';
 import App from '../App';
-import mockData from './helpers/mockData';
+import mockData from './mocks/mockData';
 // import { getExchangeRate } from '../components/helpers/getData';
 
 describe('Tests if the Wallet page is working as intended', () => {
-  // beforeEach(() => {
-  //   jest.spyOn(global, 'fetch');
-  //   global.fetch = jest.fn().mockResolvedValue({
-  //     json: jest.fn().mockResolvedValue(mockData),
-  //   });
-  // });
+  beforeEach(() => jest.spyOn(global, 'fetch').mockImplementation(mockFetch));
 
-  // afterEach(() => {
-  //   global.fetch.mockClear();
-  // });
+  afterEach(jest.clearAllMocks)
 
   const emailFieldID = 'email-field';
   const totalFieldID = 'total-field';
@@ -68,9 +61,16 @@ describe('Tests if the Wallet page is working as intended', () => {
   });
 
   // PRECISA IMPLEMENTAR MOCK NESTA FUNÇÃO DEPOIS
-  it('should render a table row with the correct values after adding an expense', () => {
+  it('should render a table row with the correct values after adding an expense', async () => {
     renderWithRouterAndRedux(<App />, { initialEntries: ['/carteira'], initialState: mockData });
 
+    const valueInput = screen.getByTestId(valueInputID);
+    const descriptionInput = screen.getByTestId(descriptionInputID);
+    const currencyInput = screen.getByTestId(currencyInputID);
+    const methodInput = screen.getByTestId(methodInputID);
+    const tagInput = screen.getByTestId(tagInputID);
+
+    //should render a predetermined expense passed as initial global state
     expect(screen.getByRole('cell', { name: /despesa de teste/i })).toBeVisible();
     expect(screen.getByRole('cell', { name: /lazer/i })).toBeVisible();
     expect(screen.getByRole('cell', { name: /cartão de crédito/i })).toBeVisible();
@@ -81,6 +81,28 @@ describe('Tests if the Wallet page is working as intended', () => {
     expect(screen.getByRole('cell', { name: /36\.50/i })).toBeVisible();
     expect(screen.getByRole('button', { name: /excluir/i })).toBeVisible();
     expect(screen.getByRole('button', { name: /\beditar\b/i })).toBeVisible();
+
+    //should render an aditional expense
+    userEvent.type(valueInput, '20');
+    userEvent.type(descriptionInput, 'Teste de adição de descrição');
+    userEvent.selectOptions(currencyInput, 'USD');
+    userEvent.selectOptions(methodInput, 'Dinheiro');
+    userEvent.selectOptions(tagInput, 'Transporte');
+    userEvent.click(screen.getByRole('button', { name: /adicionar despesa/i }));
+
+    await waitFor(() => {
+      expect(screen.getAllByRole('button', { name: /excluir/i })).toHaveLength(2);
+      expect(screen.getByRole('cell', { name: /Teste de adição de descrição/i }))
+        .toBeVisible();
+      expect(screen.getByRole('cell', { name: /transporte/i })).toBeVisible();
+      expect(screen.getByRole('cell', { name: /dinheiro/i })).toBeVisible();
+      expect(screen.getByRole('cell', { name: /20\.00/i })).toBeVisible();
+      expect(screen.getByRole('cell', { name: /dólar americano\/real brasileiro/i }))
+        .toBeVisible();
+      expect(screen.getByRole('cell', { name: /4\.91/i })).toBeVisible();
+      expect(screen.getByRole('cell', { name: /98\.26/i })).toBeVisible();
+      expect(screen.getByTestId('total-field')).toHaveTextContent(/134\.76/);
+    })
   });
 
   it('should edit an expense correctly', async () => {
@@ -151,5 +173,8 @@ describe('Tests if the Wallet page is working as intended', () => {
       expect(screen.queryByRole('button', { name: /editar despesa/i }))
         .not.toBeInTheDocument();
     });
+
+    expect(global.fetch).toHaveBeenCalled();
   });
+
 });
