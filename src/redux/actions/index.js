@@ -36,7 +36,7 @@ export const actionDeleteExpense = (id, expenses) => {
   };
 };
 
-export const actionAddSubtotal = (currencyData, value, id, subtotals = []) => ({
+export const actionCalcSubtotal = (currencyData, value, id, subtotals = []) => ({
   type: CALC_SUBTOTAL,
   payload: { ...subtotals, [id]: (currencyData.ask * Number(value)).toFixed(2) },
 });

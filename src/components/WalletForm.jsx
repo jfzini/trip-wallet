@@ -2,7 +2,7 @@ import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import {
-  actionAddSubtotal,
+  actionCalcSubtotal,
   actionEditExpense,
   actionGetCurrencies,
   actionSaveExpense,
@@ -39,7 +39,7 @@ class WalletForm extends Component {
     const currencies = await getExchangeRate();
     const currencyData = getCurrencyData(currencies, currency);
     dispatch(actionSaveExpense(this.state, expenses.length, currencies));
-    dispatch(actionAddSubtotal(currencyData, value, expenses.length, subtotals));
+    dispatch(actionCalcSubtotal(currencyData, value, expenses.length, subtotals));
     this.resetState();
   };
 
@@ -47,9 +47,9 @@ class WalletForm extends Component {
     const { expenses, index, dispatch, subtotals } = this.props;
     const { value, currency, method, tag, description } = this.state;
     expenses[index] = { ...expenses[index], value, currency, method, tag, description };
-    const currencies = await getExchangeRate();
+    const currencies = expenses[index].exchangeRates;
     const currencyData = getCurrencyData(currencies, currency);
-    dispatch(actionAddSubtotal(currencyData, value, expenses[index].id, subtotals));
+    dispatch(actionCalcSubtotal(currencyData, value, expenses[index].id, subtotals));
     dispatch(actionEditExpense(expenses));
     this.resetState();
   };
