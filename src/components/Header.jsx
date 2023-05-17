@@ -11,12 +11,14 @@ class Header extends Component {
 
     return (
       <header>
-        <div className='header-data'>
+        <div className="header-data">
           <p data-testid="email-field">{email}</p>
-          <p data-testid="total-field" className='total'>{`BRL: ${totalExpenses.toFixed(2)}`}</p>
+          <p data-testid="total-field" className="total">
+            {`BRL: ${totalExpenses.toFixed(2)}`}
+          </p>
         </div>
         <h1>Trip Wallet</h1>
-        <div></div>
+        <div />
       </header>
     );
   }
@@ -29,7 +31,7 @@ Header.propTypes = {
 const mapStateToProps = (globalState) => ({
   email: globalState.user.email,
   subtotals: globalState.wallet.subtotals,
-  subtotalsQnt: Object.keys(globalState.wallet.subtotals).length, 
+  subtotalsQnt: Object.keys(globalState.wallet.subtotals).length,
 });
 
 export default connect(mapStateToProps)(Header);

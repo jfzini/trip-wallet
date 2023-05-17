@@ -11,7 +11,6 @@ describe('Tests if the Wallet page is working as intended', () => {
 
   const emailFieldID = 'email-field';
   const totalFieldID = 'total-field';
-  const headerCurrencyFieldID = 'header-currency-field';
   const valueInputID = 'value-input';
   const descriptionInputID = 'description-input';
   const currencyInputID = 'currency-input';
@@ -37,7 +36,6 @@ describe('Tests if the Wallet page is working as intended', () => {
     // Rendering wallet page
     const emailField = screen.getByTestId(emailFieldID);
     const totalField = screen.getByTestId(totalFieldID);
-    const headerCurrencyField = screen.getByTestId(headerCurrencyFieldID);
     const valueInput = screen.getByTestId(valueInputID);
     const descriptionInput = screen.getByTestId(descriptionInputID);
     const currencyInput = screen.getByTestId(currencyInputID);
@@ -48,7 +46,6 @@ describe('Tests if the Wallet page is working as intended', () => {
 
     expect(emailField).toHaveTextContent('teste@teste.com');
     expect(totalField).toHaveTextContent('0.00');
-    expect(headerCurrencyField).toHaveTextContent('BRL');
     expect(valueInput).toHaveTextContent('');
     expect(descriptionInput).toHaveTextContent('');
     await waitFor(() => { expect(currencyInput.value).toEqual('USD'); });

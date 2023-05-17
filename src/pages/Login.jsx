@@ -41,7 +41,7 @@ class Login extends React.Component {
 
     return (
       <main>
-        <div className='title'>
+        <div className="title">
           <h1>Trip Wallet</h1>
         </div>
         <div className="login-content">

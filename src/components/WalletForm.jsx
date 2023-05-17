@@ -7,7 +7,7 @@ import {
   actionGetCurrencies,
   actionSaveExpense,
 } from '../redux/actions';
-import { getExchangeRate, getCurrencyData } from './services/getData';
+import { getExchangeRate, getCurrencyData } from './helpers/getData';
 
 class WalletForm extends Component {
   state = {
@@ -80,8 +80,8 @@ class WalletForm extends Component {
             id="value-input"
             type="number"
             placeholder="valor"
-            value={value}
-            onChange={(e) => this.handleChange(e.target)}
+            value={ value }
+            onChange={ (e) => this.handleChange(e.target) }
           />
         </div>
         <div className="general-input">
@@ -92,8 +92,8 @@ class WalletForm extends Component {
             id="description-input"
             type="text"
             placeholder="descrição"
-            value={description}
-            onChange={(e) => this.handleChange(e.target)}
+            value={ description }
+            onChange={ (e) => this.handleChange(e.target) }
           />
         </div>
         <div className="general-input">
@@ -102,11 +102,11 @@ class WalletForm extends Component {
             data-testid="currency-input"
             name="currency"
             id="currency-select"
-            value={currency}
-            onChange={(e) => this.handleChange(e.target)}
+            value={ currency }
+            onChange={ (e) => this.handleChange(e.target) }
           >
             {currencies.map((cur) => (
-              <option key={cur} value={cur}>
+              <option key={ cur } value={ cur }>
                 {cur}
               </option>
             ))}
@@ -118,8 +118,8 @@ class WalletForm extends Component {
             name="method"
             id="payment-method"
             data-testid="method-input"
-            value={method}
-            onChange={(e) => this.handleChange(e.target)}
+            value={ method }
+            onChange={ (e) => this.handleChange(e.target) }
           >
             <option value="Dinheiro">Dinheiro</option>
             <option value="Cartão de crédito">Cartão de crédito</option>
@@ -130,11 +130,10 @@ class WalletForm extends Component {
           <label htmlFor="tag-input">Tipo de gasto:</label>
           <select
             name="tag"
-            id="tag"
             data-testid="tag-input"
             id="tag-input"
-            value={tag}
-            onChange={(e) => this.handleChange(e.target)}
+            value={ tag }
+            onChange={ (e) => this.handleChange(e.target) }
           >
             <option value="Alimentação">Alimentação</option>
             <option value="Lazer">Lazer</option>
@@ -143,7 +142,7 @@ class WalletForm extends Component {
             <option value="Saúde">Saúde</option>
           </select>
         </div>
-        <button type="button" onClick={this.handleClick}>
+        <button type="button" onClick={ this.handleClick }>
           {editor ? 'Editar despesa' : 'Adicionar despesa'}
         </button>
       </form>
