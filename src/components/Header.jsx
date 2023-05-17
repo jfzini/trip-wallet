@@ -3,28 +3,19 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
 class Header extends Component {
-  state = {
-    subtotals: {},
-  };
-
-  componentDidMount() {
-    setInterval(() => {
-      const { subtotals } = this.props;
-      this.setState({ subtotals });
-    }, 100);
-  }
-
   render() {
     const { email } = this.props;
-    const { subtotals } = this.state;
+    const { subtotals } = this.props;
     const numSubtotals = Object.values(subtotals);
     const totalExpenses = numSubtotals.reduce((a, b) => Number(a) + Number(b), 0);
 
     return (
       <header>
-        <p data-testid="email-field">{email}</p>
-        <p data-testid="total-field">{totalExpenses.toFixed(2)}</p>
-        <p data-testid="header-currency-field">BRL</p>
+        <h1>Trip Wallet</h1>
+        <div className='header-data'>
+          <p data-testid="email-field">{email}</p>
+          <p data-testid="total-field">{`BRL: ${totalExpenses.toFixed(2)}`}</p>
+        </div>
       </header>
     );
   }
@@ -37,6 +28,7 @@ Header.propTypes = {
 const mapStateToProps = (globalState) => ({
   email: globalState.user.email,
   subtotals: globalState.wallet.subtotals,
+  subtotalsQnt: Object.keys(globalState.wallet.subtotals).length, 
 });
 
 export default connect(mapStateToProps)(Header);

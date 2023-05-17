@@ -7,7 +7,7 @@ import {
   actionGetCurrencies,
   actionSaveExpense,
 } from '../redux/actions';
-import { getExchangeRate, getCurrencyData } from './helpers/getData';
+import { getExchangeRate, getCurrencyData } from './services/getData';
 
 class WalletForm extends Component {
   state = {
@@ -43,7 +43,7 @@ class WalletForm extends Component {
     this.resetState();
   };
 
-  handleEdit = async () => {
+  handleEdit = () => {
     const { expenses, index, dispatch, subtotals } = this.props;
     const { value, currency, method, tag, description } = this.state;
     expenses[index] = { ...expenses[index], value, currency, method, tag, description };
@@ -71,7 +71,7 @@ class WalletForm extends Component {
     const { currencies, editor } = this.props;
     const { value, currency, method, description, tag } = this.state;
     return (
-      <form action="">
+      <form action="" className='wallet-form'>
         <input
           name="value"
           data-testid="value-input"

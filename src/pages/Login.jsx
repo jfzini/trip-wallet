@@ -41,7 +41,9 @@ class Login extends React.Component {
 
     return (
       <main>
-        <h1>Trip Wallet</h1>
+        <div className='title'>
+          <h1>Trip Wallet</h1>
+        </div>
         <div className="login-content">
           <div className="blue-circle" />
           <div className="pink-circle" />
