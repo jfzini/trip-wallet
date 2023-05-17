@@ -71,7 +71,7 @@ class WalletForm extends Component {
     const { currencies, editor } = this.props;
     const { value, currency, method, description, tag } = this.state;
     return (
-      <form action="" className="general-form wallet-form">
+      <form action="" className={`general-form wallet-form ${editor ? 'editor' : '' }`}>
         <div className="general-input">
           <label htmlFor="value-input">Valor:</label>
           <input

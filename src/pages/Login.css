@@ -57,6 +57,7 @@ h1 {
 .general-form {
   justify-content: center;
   margin: 30px;
+  z-index: 2;
 }
 
 .general-form input , button , select {

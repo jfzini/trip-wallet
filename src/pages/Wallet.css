@@ -1,3 +1,21 @@
+@keyframes changeBorderColor {
+
+  0% , 100% {
+    border: 3px solid #00b0e5;
+    box-shadow: 0 0 10px 4px #00b0e53a;
+  }
+
+  33% {
+    border: 3px solid #00f7ff;
+    box-shadow: 0 0 10px 4px #00f7ff3a;
+  }
+
+  66% {
+    border: 3px solid #00ff80;
+    box-shadow: 0 0 10px 4px #00ff803a;
+  }
+}
+
 header {
   align-items: center;
   display: flex;
@@ -20,15 +38,18 @@ header {
   height: 600px;
 }
 
-.wallet-form button:enabled {
-  background: linear-gradient(135deg, #006eff 26%, #02b85d, #01dd26 78%);
-  color: white;
-}
-
 .total {
   background-clip: text;
   background-image: linear-gradient(135deg, #006eff 26%, #00ff80, #00ff2a 78%);
   color: transparent;
   font-size: 2rem;
   font-weight: 700;
+}
+
+.editor {
+  animation: changeBorderColor 6s linear infinite;
+}
+
+.editor button:enabled {
+  background: linear-gradient(135deg, #006eff 26%, #02b85d, #01dd26 78%);
 }
