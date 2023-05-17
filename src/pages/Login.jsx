@@ -47,8 +47,8 @@ class Login extends React.Component {
         <div className="login-content">
           <div className="blue-circle" />
           <div className="pink-circle" />
-          <form action="" className="login-form">
-            <div className="login-input">
+          <form action="" className="general-form">
+            <div className="general-input">
               <label htmlFor="email-input">E-mail</label>
               <input
                 type="email"
@@ -60,7 +60,7 @@ class Login extends React.Component {
                 onChange={ (e) => this.handleChange(e.target) }
               />
             </div>
-            <div className="login-input">
+            <div className="general-input">
               <label htmlFor="password-input">Senha</label>
               <input
                 type="password"

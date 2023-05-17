@@ -43,49 +43,49 @@ h1 {
   right: 13vw;
 }
 
-.login-form , .general-info {
+.general-form , .general-info {
   backdrop-filter: blur(10px);
   background: linear-gradient(135deg, #fff3, #ffffff0d);
   border: 1px solid white;
   border-radius: 20px;
   display: flex;
   flex-direction: column;
-  height: min(400px, 80vh);
-  width: min(400px, 80vw);
+  height: 500px;
+  width: 400px;
 }
 
-.login-form {
+.general-form {
   justify-content: center;
   margin: 30px;
 }
 
-.login-form input , button {
+.general-form input , button , select {
   border: none;
   border-radius: 6px;
   font-size: 1.3rem;
-  padding: 5px;
+  padding: 4px;
   transition: 0.1s ease-in-out;
 }
 
-.login-form button {
+.general-form button {
   font-weight: 600;
   margin: 15px;
 }
 
-.login-form button:enabled {
+.general-form button:enabled {
   background: linear-gradient(135deg, #00d7ff 12%, #00b0ff 26%, #9500ff 57%, #de00ff 78%);
   color: white;
 }
 
-.login-form button:hover {
+.general-form button:hover {
   cursor: pointer;
 }
 
-.login-form button:active {
+.general-form button:active {
   transform: translateY(5px);
 }
 
-.login-input {
+.general-input {
   color: white;
   display: flex;
   flex-direction: column;
@@ -93,7 +93,7 @@ h1 {
   margin: 15px;
 }
 
-.login-input span {
+.general-input span {
   font-size: 1rem;
 }
 

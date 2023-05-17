@@ -11,11 +11,12 @@ class Header extends Component {
 
     return (
       <header>
-        <h1>Trip Wallet</h1>
         <div className='header-data'>
           <p data-testid="email-field">{email}</p>
-          <p data-testid="total-field">{`BRL: ${totalExpenses.toFixed(2)}`}</p>
+          <p data-testid="total-field" className='total'>{`BRL: ${totalExpenses.toFixed(2)}`}</p>
         </div>
+        <h1>Trip Wallet</h1>
+        <div></div>
       </header>
     );
   }
