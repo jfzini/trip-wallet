@@ -115,7 +115,9 @@ describe('Tests if the Wallet page is working as intended', () => {
     userEvent.click(screen.getByRole('button', { name: /\beditar\b/i }));
     expect(screen.queryByRole('button', { name: /editar despesa/i })).toBeVisible();
 
+    userEvent.clear(valueInput);
     userEvent.type(valueInput, '15');
+    userEvent.clear(descriptionInput);
     userEvent.type(descriptionInput, 'Teste de alteração de descrição');
     userEvent.selectOptions(currencyInput, 'USD');
     userEvent.selectOptions(methodInput, 'Dinheiro');
