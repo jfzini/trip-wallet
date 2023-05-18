@@ -9,7 +9,6 @@ describe('Tests if the Wallet page is working as intended', () => {
   beforeEach(() => jest.spyOn(global, 'fetch').mockImplementation(mockFetch));
   afterEach(jest.clearAllMocks);
 
-  const emailFieldID = 'email-field';
   const totalFieldID = 'total-field';
   const valueInputID = 'value-input';
   const descriptionInputID = 'description-input';
@@ -64,8 +63,8 @@ describe('Tests if the Wallet page is working as intended', () => {
       .toBeVisible();
     expect(screen.getByRole('cell', { name: /3\.65/i })).toBeVisible();
     expect(screen.getByRole('cell', { name: /36\.50/i })).toBeVisible();
-    expect(screen.getByRole('img', { name: /delete\-expense/i })).toBeVisible();
-    expect(screen.getByRole('img', { name: /edit\-expense/i })).toBeVisible();
+    expect(screen.getByRole('img', { name: /delete-expense/i })).toBeVisible();
+    expect(screen.getByRole('img', { name: /edit-expense/i })).toBeVisible();
   });
 
   it('should render an aditional expense and save in the global state', async () => {
@@ -85,7 +84,7 @@ describe('Tests if the Wallet page is working as intended', () => {
     userEvent.click(screen.getByRole('button', { name: /adicionar despesa/i }));
 
     await waitFor(() => {
-      expect(screen.getAllByRole('img', { name: /delete\-expense/i })).toHaveLength(2);
+      expect(screen.getAllByRole('img', { name: /delete-expense/i })).toHaveLength(2);
       expect(screen.getByRole('cell', { name: /Teste de adição de descrição/i }))
         .toBeVisible();
       expect(screen.getByRole('cell', { name: /transporte/i })).toBeVisible();
@@ -110,7 +109,7 @@ describe('Tests if the Wallet page is working as intended', () => {
     const methodInput = screen.getByTestId(methodInputID);
     const tagInput = screen.getByTestId(tagInputID);
 
-    userEvent.click(screen.getByRole('img', { name: /edit\-expense/i }));
+    userEvent.click(screen.getByRole('img', { name: /edit-expense/i }));
     expect(screen.queryByRole('button', { name: /\bsalvar\b/i })).toBeVisible();
 
     userEvent.clear(valueInput);
@@ -132,8 +131,8 @@ describe('Tests if the Wallet page is working as intended', () => {
         .toBeVisible();
       expect(screen.getByRole('cell', { name: /4\.91/i })).toBeVisible();
       expect(screen.getByRole('cell', { name: /73\.70/i })).toBeVisible();
-      expect(screen.getByRole('img', { name: /delete\-expense/i })).toBeVisible();
-      expect(screen.getByRole('img', { name: /edit\-expense/i })).toBeVisible();
+      expect(screen.getByRole('img', { name: /delete-expense/i })).toBeVisible();
+      expect(screen.getByRole('img', { name: /edit-expense/i })).toBeVisible();
       expect(screen.queryByRole('button', { name: /\bsalvar\b/i }))
         .not.toBeInTheDocument();
     });
@@ -153,10 +152,10 @@ describe('Tests if the Wallet page is working as intended', () => {
       .toBeVisible();
     expect(screen.getByRole('cell', { name: /4\.91/i })).toBeVisible();
     expect(screen.getByRole('cell', { name: /73\.70/i })).toBeVisible();
-    expect(screen.getByRole('img', { name: /delete\-expense/i })).toBeVisible();
-    expect(screen.getByRole('img', { name: /edit\-expense/i })).toBeVisible();
+    expect(screen.getByRole('img', { name: /delete-expense/i })).toBeVisible();
+    expect(screen.getByRole('img', { name: /edit-expense/i })).toBeVisible();
 
-    userEvent.click(screen.getByRole('img', { name: /delete\-expense/i }));
+    userEvent.click(screen.getByRole('img', { name: /delete-expense/i }));
 
     await waitFor(() => {
       expect(screen.queryByRole('cell', { name: /Teste de alteração de descrição/i }))

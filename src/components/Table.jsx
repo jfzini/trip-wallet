@@ -33,7 +33,7 @@ class Table extends Component {
     return (
       <table>
         <thead>
-          <tr style={{backgroundImage:'none'}}>
+          <tr style={ { backgroundImage: 'none' } }>
             {ths.map((th) => <th key={ th }>{th}</th>)}
           </tr>
         </thead>
@@ -48,7 +48,11 @@ class Table extends Component {
             exchangeRates,
             id,
           }, index) => (
-            <tr key={ index } id={ `expense-${id}` } className={index === indexToEdit ? 'editing-tr' : ''}>
+            <tr
+              key={ index }
+              id={ `expense-${id}` }
+              className={ index === indexToEdit ? 'editing-tr' : '' }
+            >
               <td>{description}</td>
               <td>{tag}</td>
               <td>{method}</td>
@@ -64,7 +68,7 @@ class Table extends Component {
                     onClick={ () => this.handleDelete(id) }
                     data-testid="delete-btn"
                   >
-                    {<img src={deleteIcon} alt="delete-expense" className='delete-btn'/>}
+                    <img src={ deleteIcon } alt="delete-expense" className="delete-btn" />
                   </button>
                 ) : (
                   ''
@@ -74,7 +78,7 @@ class Table extends Component {
                   onClick={ () => this.handleEdit(id) }
                   data-testid="edit-btn"
                 >
-                  {<img src={editIcon} alt="edit-expense" className='edit-btn'/>}
+                  <img src={ editIcon } alt="edit-expense" className="edit-btn" />
                 </button>
               </td>
             </tr>))}

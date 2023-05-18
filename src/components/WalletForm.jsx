@@ -63,10 +63,10 @@ class WalletForm extends Component {
   };
 
   cancelEdit = () => {
-    const {dispatch} = this.props;
+    const { dispatch } = this.props;
     dispatch(actionCancelEdit());
     this.resetState();
-  }
+  };
 
   handleClick = () => {
     const { editor } = this.props;
@@ -85,7 +85,7 @@ class WalletForm extends Component {
     const { currencies, editor } = this.props;
     const { value, currency, method, description, tag } = this.state;
     return (
-      <form action="" className={`general-form wallet-form ${editor ? 'editor' : '' }`}>
+      <form action="" className={ `general-form wallet-form ${editor ? 'editor' : ''}` }>
         <div className="general-input">
           <label htmlFor="value-input">Valor:</label>
           <input
@@ -160,7 +160,7 @@ class WalletForm extends Component {
           {editor ? 'Salvar' : 'Adicionar despesa'}
         </button>
         {editor
-          ? <button onClick={this.cancelEdit} className='cancel-btn'>Cancelar</button>
+          ? <button onClick={ this.cancelEdit } className="cancel-btn">Cancelar</button>
           : ''}
       </form>
     );

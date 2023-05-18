@@ -57,13 +57,13 @@ const walletReducer = (state = INITIAL_STATE, action) => {
     return {
       ...state,
       prevEditData: action.payload,
-    }
+    };
   case CANCEL_EDIT:
     return {
       ...state,
       editor: false,
       indexToEdit: -1,
-    }
+    };
   default:
     return state;
   }

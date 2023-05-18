@@ -4,7 +4,6 @@ import { connect } from 'react-redux';
 
 class Header extends Component {
   render() {
-    const { email } = this.props;
     const { subtotals } = this.props;
     const numSubtotals = Object.values(subtotals);
     const totalExpenses = numSubtotals.reduce((a, b) => Number(a) + Number(b), 0);
@@ -13,7 +12,9 @@ class Header extends Component {
       <header>
         <div className="header-data">
           <p data-testid="total-field" className="total">
-            Total: <span className="total">{`R$ ${totalExpenses.toFixed(2)}`}</span>
+            Total:
+            {' '}
+            <span className="total">{`R$ ${totalExpenses.toFixed(2)}`}</span>
           </p>
         </div>
         <h1>Trip Wallet</h1>
@@ -28,7 +29,6 @@ Header.propTypes = {
 }.isRequired;
 
 const mapStateToProps = (globalState) => ({
-  email: globalState.user.email,
   subtotals: globalState.wallet.subtotals,
   subtotalsQnt: Object.keys(globalState.wallet.subtotals).length,
 });
