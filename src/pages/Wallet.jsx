@@ -10,6 +10,8 @@ class Wallet extends React.Component {
       <>
         <Header />
         <div className="wallet-page">
+          <div className="dark-circle" />
+          <div className="darker-circle" />
           <WalletForm />
           <Table />
         </div>

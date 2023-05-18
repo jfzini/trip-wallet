@@ -83,9 +83,9 @@ class Login extends React.Component {
           </form>
           <aside className="general-info">
             <p>
-              Projeto desenvolvido utilizando React, React-Router, Redux e actions
-              assíncronas. Para os testes foi utilizada a React-Testing-Library, mocks
-              de funções e de retornos de API.
+              Projeto desenvolvido utilizando React, React-Router, Redux e Middlewares
+              para utilizar actions assíncronas. Para os testes foi utilizada a
+              React-Testing-Library, mocks de funções e de retornos de API.
             </p>
             <p>
               Mais detalhes podem ser conferidos no repositório do

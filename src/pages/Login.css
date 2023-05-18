@@ -23,7 +23,7 @@ h1 {
   min-height: 80vh;
 }
 
-.blue-circle , .pink-circle {
+.blue-circle , .pink-circle , .dark-circle , .darker-circle {
   border-radius: 50%;
   height: max(300px, 50vh);
   position: absolute;
@@ -46,8 +46,9 @@ h1 {
 .general-form , .general-info {
   backdrop-filter: blur(10px);
   background: linear-gradient(135deg, #fff3, #ffffff0d);
-  border: 1px solid white;
+  border: 1px solid rgba(255, 255, 255, 0.459);
   border-radius: 20px;
+  box-shadow: 1px 1px rgba(255, 255, 255, 0.411);
   display: flex;
   flex-direction: column;
   height: 500px;
