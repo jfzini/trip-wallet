@@ -7,6 +7,8 @@ import {
   actionGetIndexToEdit,
   actionPreloadEditData,
 } from '../redux/actions';
+import deleteIcon from '../imgs/delete_FILL0_wght400_GRAD0_opsz48.svg';
+import editIcon from '../imgs/edit_note_FILL0_wght400_GRAD0_opsz48.svg';
 
 class Table extends Component {
   handleDelete = (id) => {
@@ -24,17 +26,18 @@ class Table extends Component {
   };
 
   render() {
-    const { expenses } = this.props;
+    const { expenses, indexToEdit, editor } = this.props;
     const ths = ['Descrição', 'Tag', 'Método de pagamento', 'Valor', 'Moeda',
       'Câmbio utilizado', 'Valor convertido', 'Moeda de conversão', 'Editar/Excluir'];
 
     return (
       <table>
         <thead>
-          <tr>
+          <tr style={{backgroundImage:'none'}}>
             {ths.map((th) => <th key={ th }>{th}</th>)}
           </tr>
         </thead>
+        <hr />
         <tbody id="expenses-tbody">
           {expenses.map(({
             description,
@@ -44,8 +47,8 @@ class Table extends Component {
             currency,
             exchangeRates,
             id,
-          }) => (
-            <tr key={ id } id={ `expense-${id}` }>
+          }, index) => (
+            <tr key={ index } id={ `expense-${id}` } className={index === indexToEdit ? 'editing-tr' : ''}>
               <td>{description}</td>
               <td>{tag}</td>
               <td>{method}</td>
@@ -55,19 +58,23 @@ class Table extends Component {
               <td>{(exchangeRates[currency].ask * value).toFixed(2)}</td>
               <td>Real</td>
               <td>
-                <button
-                  type="button"
-                  onClick={ () => this.handleDelete(id) }
-                  data-testid="delete-btn"
-                >
-                  Excluir
-                </button>
+                {!editor ? (
+                  <button
+                    type="button"
+                    onClick={ () => this.handleDelete(id) }
+                    data-testid="delete-btn"
+                  >
+                    {<img src={deleteIcon} alt="delete-expense" className='delete-btn'/>}
+                  </button>
+                ) : (
+                  ''
+                )}
                 <button
                   type="button"
                   onClick={ () => this.handleEdit(id) }
                   data-testid="edit-btn"
                 >
-                  Editar
+                  {<img src={editIcon} alt="edit-expense" className='edit-btn'/>}
                 </button>
               </td>
             </tr>))}
@@ -87,6 +94,7 @@ const mapStateToProps = (globalState) => ({
   expenses: globalState.wallet.expenses,
   subtotals: globalState.wallet.subtotals,
   editor: globalState.wallet.editor,
+  indexToEdit: globalState.wallet.indexToEdit,
 });
 
 export default connect(mapStateToProps)(Table);

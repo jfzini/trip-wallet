@@ -23,6 +23,58 @@ header {
   justify-content: space-around;
 }
 
+table {
+  display: block;
+}
+
+table button {
+  height: 25px;
+  margin-inline: 7px;
+  overflow: hidden;
+  padding: 0;
+  width: 25px;
+}
+
+table button:hover {
+  cursor: pointer;
+}
+
+table button:active {
+  transform: translateY(3px);
+}
+
+tr , thead {
+  align-items: center;
+  display: flex;
+  justify-content: space-between;
+}
+
+tr:nth-of-type( 2n + 1 ) {
+  background-image: linear-gradient(90deg, #222 0%, #162931, #222 100%);
+}
+
+tr:nth-of-type( 2n ) {
+  background-image: linear-gradient(90deg, #222 0%, #17323d, #222 100%);
+}
+
+thead , hr {
+  color: #00e1ff;
+  width: 1260px;
+}
+
+hr {
+  background-image: linear-gradient(135deg, #006eff 26%, #00ff80, #00ff2a 78%);
+  border: none;
+  height: 3px;
+}
+
+td , th {
+  display: block;
+  margin: 20px;
+  text-align: center;
+  width: 100px;
+}
+
 .header-data {
   color: white;
 }
@@ -53,6 +105,31 @@ header {
   animation: changeBorderColor 6s linear infinite;
 }
 
-.editor button:enabled {
+.editor button:nth-of-type( 1 ) {
   background: linear-gradient(135deg, #006eff 26%, #02b85d, #01dd26 78%);
+}
+
+.editor button:nth-of-type( 2 ) {
+  background: linear-gradient(135deg, #5c0000 0%, red, #5c0000 100%);
+}
+
+.editing-tr {
+  animation: changeBorderColor 6s linear infinite;
+  background-clip: text;
+  background-image: linear-gradient(135deg, #00c3ff 26%, #00ff80, #00ff2a 78%) ! important;
+  border-radius: 10px;
+  color: transparent;
+  font-weight: 800;
+}
+
+.edit-btn {
+  background-color: #00ffc8;
+  height: inherit;
+  width: inherit;
+}
+
+.delete-btn {
+  background-color: #ff4d2e;
+  height: inherit;
+  width: inherit;
 }

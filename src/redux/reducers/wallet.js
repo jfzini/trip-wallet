@@ -6,6 +6,7 @@ import {
   EDIT_INDEX,
   EDIT_EXPENSE,
   EDIT_DATA,
+  CANCEL_EDIT,
 } from '../actions';
 
 const INITIAL_STATE = {
@@ -13,7 +14,7 @@ const INITIAL_STATE = {
   expenses: [], // array de objetos, com cada objeto tendo as chaves id, value, currency, method, tag, description e exchangeRates
   subtotals: {}, // objeto com todos os subtotais de gastos
   editor: false, // valor booleano que indica de uma despesa está sendo editada
-  indexToEdit: 0, // valor numérico que armazena o id da despesa que esta sendo editada
+  indexToEdit: -1, // valor numérico que armazena o id da despesa que esta sendo editada
   prevEditData: {},
 };
 
@@ -49,12 +50,19 @@ const walletReducer = (state = INITIAL_STATE, action) => {
     return {
       ...state,
       expenses: action.payload,
+      indexToEdit: -1,
       editor: false,
     };
   case EDIT_DATA:
     return {
       ...state,
       prevEditData: action.payload,
+    }
+  case CANCEL_EDIT:
+    return {
+      ...state,
+      editor: false,
+      indexToEdit: -1,
     }
   default:
     return state;

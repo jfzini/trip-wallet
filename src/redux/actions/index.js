@@ -7,6 +7,7 @@ export const DELETE_SUBTOTAL = 'DELETE_SUBTOTAL';
 export const EDIT_INDEX = 'EDIT_INDEX';
 export const EDIT_EXPENSE = 'EDIT_EXPENSE';
 export const EDIT_DATA = 'EDIT_DATA';
+export const CANCEL_EDIT = 'CANCEL_EDIT';
 
 export const actionSubmitLogin = (state) => ({
   type: SUBMIT_LOGIN,
@@ -74,4 +75,8 @@ export const actionEditExpense = (expenses) => ({
 export const actionPreloadEditData = ({ value, currency, method, tag, description }) => ({
   type: EDIT_DATA,
   payload: { value, currency, method, tag, description }
+})
+
+export const actionCancelEdit = () => ({
+  type: CANCEL_EDIT
 })

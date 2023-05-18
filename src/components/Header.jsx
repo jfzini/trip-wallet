@@ -12,7 +12,6 @@ class Header extends Component {
     return (
       <header>
         <div className="header-data">
-          <p data-testid="email-field">{email}</p>
           <p data-testid="total-field" className="total">
             Total: <span className="total">{`R$ ${totalExpenses.toFixed(2)}`}</span>
           </p>

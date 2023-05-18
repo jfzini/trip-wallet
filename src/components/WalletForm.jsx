@@ -6,6 +6,7 @@ import {
   actionEditExpense,
   actionGetCurrencies,
   actionSaveExpense,
+  actionCancelEdit,
 } from '../redux/actions';
 import { getExchangeRate, getCurrencyData } from './helpers/getData';
 
@@ -60,6 +61,12 @@ class WalletForm extends Component {
     dispatch(actionEditExpense(expenses));
     this.resetState();
   };
+
+  cancelEdit = () => {
+    const {dispatch} = this.props;
+    dispatch(actionCancelEdit());
+    this.resetState();
+  }
 
   handleClick = () => {
     const { editor } = this.props;
@@ -150,8 +157,11 @@ class WalletForm extends Component {
           </select>
         </div>
         <button type="button" onClick={ this.handleClick }>
-          {editor ? 'Editar despesa' : 'Adicionar despesa'}
+          {editor ? 'Salvar' : 'Adicionar despesa'}
         </button>
+        {editor
+          ? <button onClick={this.cancelEdit} className='cancel-btn'>Cancelar</button>
+          : ''}
       </form>
     );
   }
