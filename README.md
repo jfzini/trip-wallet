@@ -2,6 +2,13 @@
 
 This project is a simulation of a wallet, where you can add expenses, convert the spent currencies to Brazilian Real, and view a table with the total expenses. The development was carried out using Redux, React, React Router, and Middlewares for handling asynchronous actions. The tests were developed with React Testing Library. Additionally, the data rendering was done using an API that provides updated information on currency exchange rates.
 
+## Demo
+- https://trip-wallet-project.vercel.app/
+
+https://github.com/jfzini/trip-wallet/assets/122232543/ee5a76c7-870f-4f63-b941-55401ffb0afe
+
+
+
 ## Features
 
 - Add, edit, and delete expenses: You can add new expenses to the wallet, edit their values and descriptions, and even delete them from the table.
