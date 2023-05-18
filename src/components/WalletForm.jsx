@@ -23,6 +23,13 @@ class WalletForm extends Component {
     dispatch(actionGetCurrencies());
   }
 
+  componentDidUpdate(prevProps) {
+    const { editor, prevEditData } = this.props;
+    if (editor && prevEditData !== prevProps.prevEditData) {
+      this.setState(prevEditData);
+    }
+  }
+
   resetState = () => {
     this.setState({
       value: '',
@@ -161,8 +168,9 @@ const mapStateToProps = (globalState) => ({
   currencies: globalState.wallet.currencies,
   expenses: globalState.wallet.expenses,
   editor: globalState.wallet.editor,
-  index: globalState.wallet.idToEdit,
+  index: globalState.wallet.indexToEdit,
   subtotals: globalState.wallet.subtotals,
+  prevEditData: globalState.wallet.prevEditData,
 });
 
 export default connect(mapStateToProps)(WalletForm);

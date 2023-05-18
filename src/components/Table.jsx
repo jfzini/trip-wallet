@@ -5,6 +5,7 @@ import {
   actionDeleteExpense,
   actionDeleteSubtotal,
   actionGetIndexToEdit,
+  actionPreloadEditData,
 } from '../redux/actions';
 
 class Table extends Component {
@@ -18,6 +19,7 @@ class Table extends Component {
     const { expenses, dispatch } = this.props;
     const foundExpense = expenses.find((expense) => expense.id === id);
     const index = expenses.indexOf(foundExpense);
+    dispatch(actionPreloadEditData(foundExpense));
     dispatch(actionGetIndexToEdit(index));
   };
 

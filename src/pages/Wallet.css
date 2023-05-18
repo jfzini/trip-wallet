@@ -39,11 +39,14 @@ header {
 }
 
 .total {
+  font-size: 2rem;
+  font-weight: 700;
+}
+
+.total span {
   background-clip: text;
   background-image: linear-gradient(135deg, #006eff 26%, #00ff80, #00ff2a 78%);
   color: transparent;
-  font-size: 2rem;
-  font-weight: 700;
 }
 
 .editor {

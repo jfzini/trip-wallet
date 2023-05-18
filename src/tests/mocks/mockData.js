@@ -244,7 +244,7 @@ const mockData = {
       0: '36.50',
     },
     editor: false,
-    idToEdit: 0,
+    indexToEdit: 0,
   },
 };
 
