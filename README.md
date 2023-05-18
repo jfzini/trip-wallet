@@ -17,11 +17,13 @@ This project is a simulation of a wallet, where you can add expenses, convert th
 - Currency API: Used to obtain exchange rates and perform currency conversions.
 - API Link: [https://economia.awesomeapi.com.br/json/all](https://economia.awesomeapi.com.br/json/all)
 
-## Configuration and Node Version
+## Configuration, Commands and Node Version
 
 1. Clone the project repository.
 2. Install the necessary dependencies by running the command: `npm install`.
 3. Run the project locally with the command: `npm start`.
+4. To run all tests: `npm test`.
+5. To see tests coverage: `npm run test-coverage`.
 
 Please ensure that you have Node version 16 or higher installed.
 
