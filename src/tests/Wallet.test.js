@@ -22,7 +22,7 @@ describe('Tests if the Wallet page is working as intended', () => {
     // Filling login form
     const email = screen.getByTestId('email-input');
     const password = screen.getByTestId('password-input');
-    const btn = screen.getByRole('button', { name: /entrar/i });
+    const btn = screen.getByRole('button', { name: /^entrar$/i });
 
     userEvent.type(email, 'teste@teste.com');
     userEvent.type(password, '123456');

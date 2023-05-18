@@ -16,7 +16,7 @@ describe('Tests if the Login page is working as intended', () => {
 
     const email = screen.getByTestId(emailTestID);
     const password = screen.getByTestId(passwordTestID);
-    const btn = screen.getByRole('button', { name: /entrar/i });
+    const btn = screen.getByRole('button', { name: /^entrar$/i });
 
     expect(email).toBeInTheDocument();
     expect(password).toBeInTheDocument();
@@ -29,7 +29,7 @@ describe('Tests if the Login page is working as intended', () => {
 
     const email = screen.getByTestId(emailTestID);
     const password = screen.getByTestId(passwordTestID);
-    const btn = screen.getByRole('button', { name: /entrar/i });
+    const btn = screen.getByRole('button', { name: /^entrar$/i });
 
     userEvent.type(email, invalidEmail);
     userEvent.type(password, validPassword);
@@ -53,7 +53,7 @@ describe('Tests if the Login page is working as intended', () => {
 
     const email = screen.getByTestId(emailTestID);
     const password = screen.getByTestId(passwordTestID);
-    const btn = screen.getByRole('button', { name: /entrar/i });
+    const btn = screen.getByRole('button', { name: /^entrar$/i });
 
     userEvent.type(email, validEmail);
     userEvent.type(password, validPassword);

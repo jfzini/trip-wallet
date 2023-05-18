@@ -80,6 +80,7 @@ class Login extends React.Component {
             >
               Entrar
             </button>
+            <button onClick={ () => this.handleClick() }>Entrar sem Login</button>
           </form>
           <aside className="general-info">
             <p>
